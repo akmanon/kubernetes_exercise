@@ -14,22 +14,22 @@ spec:
         cpu: "500m"
     ports:
       - containerPort: 80
-    volumeMouts:
-    - name: sharevolume
-      mountpath: /usr/share/nginx/html
+    volumeMounts:
+    - name: sharedvolume
+      mountPath: /usr/share/nginx/html
 
   - name: myapp-sidecar
-    image: busybox
+    image: alpine:3.19.1
     command: ["/bin/sh"]
-    args: ["-c", "while true; do wget -o /var/html/index.html https://raw.githubusercontent.com/akmanon/kubernetes_exercise/main/MulticontainerSidecarPod/index.html; echo date; sleep 15; done"]
+    args: ["-c", "apk add curl; while true; do curl -Lo /var/html/index.html https://raw.githubusercontent.com/akmanon/kubernetes_exercise/main/MulticontainerSidecarPod/index.html -s; echo date; sleep 15; done"]
     resources:
       limits:
         memory: "128Mi"
         cpu: "500m"
-    volumeMouts:
-    - name: sharevolume
-      mountpath: /var/html
+    volumeMounts:
+    - name: sharedvolume
+      mountPath: /var/html
   volumes:
-    - name: sharevolume
-      emptydir: {}
+    - name: sharedvolume
+      emptyDir: {}
     
