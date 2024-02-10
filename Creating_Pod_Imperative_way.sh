@@ -1,5 +1,5 @@
 #Create Pod in Imperative Ways
-kubectl run myapp --image=nginx --restart=never
+kubectl run myapp --image=nginx --restart=Never
 
 #Get Pods Details
 kubectl get pods -o wide
