@@ -11,7 +11,8 @@ kubectl describe pods myapp
 kubectl logs myapp
 
 #To run Command in Pod and to enter into pod user -it with -- bash in the end
-kubectl exec myapp -- "ls; hostname;"
+kubectl exec myapp -- "ls"
+kubectl exec -it myapp -- bash
 
 #TO delete Pod 
 kubectl delete pods myapp
