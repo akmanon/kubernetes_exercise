@@ -9,3 +9,6 @@ spec:
   ports:
   - port: 5000
     targetPort: 80
+
+#Imperative Way
+#kubectl expose deployment/backend --type=ClusterIP --name=backend-svc
