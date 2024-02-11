@@ -1,6 +1,11 @@
 #Apply the Deployment with 4 replica pods
 kubectl apply -f ./frontend_dev.yml
 
+#To get status of deployment
+kubectl get rs
+kubectl get deployment
+kubectl get pods
+
 #Updating the image of the deployment
 kubectl set image deployment/frontend frontend=httpd:alpine
 
