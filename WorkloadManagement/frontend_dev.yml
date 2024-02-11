@@ -6,8 +6,9 @@ spec:
   replicas: 4
   strategy:
     type: RollingUpdate
-    maxUnavailable: 2
-    maxSurge: 2
+    rollingUpdate:
+      maxUnavailable: 2
+      maxSurge: 2
   selector:
     matchLabels:
       app: frontend
