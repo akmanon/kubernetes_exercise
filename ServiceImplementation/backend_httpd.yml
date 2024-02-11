@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: backend-nginx
+      environment: dev
+  template:
+    metadata:
+      labels:
+        app: backend-httpd
+        environment: dev
+    spec:
+      containers:
+      - name: backend-httpd-app
+        image: httpd:alpine
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 80

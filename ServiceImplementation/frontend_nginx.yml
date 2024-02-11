@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: frontend-nginx
+      environment: dev
+  template:
+    metadata:
+      labels:
+        app: frontend-nginx
+        environment: dev
+    spec:
+      containers:
+      - name: frontend-nginx-app
+        image: nginx:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 80
