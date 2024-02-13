@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: livenesshttp
+  labels:
+    name: liveness-http
+spec:
+  containers:
+  - name: httpsmwa
+    image: httpd:2.4.58
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+    ports:
+      - containerPort: 80
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 80
+      httpHeader:
+        - name: Custom-Header
+          value: Awesome
+    initialDelaySeconds: 3
+    periodSeconds: 3
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: livenessexec
+  labels:
+    name: liveness-exec
+spec:
+  containers:
+  - name: busyboxsd
+    image: busybox:1.36.1
+    args:
+    - /bin/sh
+    - -c 
+    - touch /tmp/testfile; sleep 50; rm -rf /tmp/testfile; sleep 600
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+  livenessProbe:
+    exec:
+      command:
+      - cat
+      - /tmp/testfile
+    initialDelaySeconds: 3
+    periodSeconds: 3
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: livenesstcp
+  labels:
+    name: liveness-tcp
+spec:
+  containers:
+  - name: rediscache
+    image: redis:7.2.4
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 6379
+    livenessProbe:
+      tcpSocket:
+        port: 6379
+      initialDelaySeconds: 10
+      periodSeconds: 3
