@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redisconf
+data:
+  author: Ashish Kumar Maurya
+  redis.conf: |
+    # Redis configuration file
+    # Network settings
+    port 7000               # Default Redis port
+    # General settings
+    daemonize yes           # Run Redis in the background as a daemon
+    pidfile /var/run/redis/redis-server.pid   # Path to the PID file
+    logfile /var/log/redis/redis-server.log   # Path to the log file
+    # Database snapshots (comment out to disable persistence)
+    save 900 1              # Save the database if at least 1 key changed in the last 900 seconds
+    save 300 10             # Save the database if at least 10 keys changed in the last 300 seconds
+    save 60 10000           # Save the database if at least 10000 keys changed in the last 60 seconds
+    # Security and Authentication
+    requirepass your_password   # Set a password for connecting to Redis; comment out to disable authentication
+    # Memory Management
+    maxmemory 100MB         # Maximum amount of memory Redis can use
+    maxmemory-policy volatile-lru   # Eviction policy for key eviction when reaching the max memory limit
+    # Logging
+    loglevel notice         # Set the logging level: debug, verbose, notice, warning
+    # Append-only mode (comment out to disable)
+    appendonly yes
+    appendfilename "appendonly.aof"

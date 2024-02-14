@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cache-server
+  labels:
+    name: cache-server
+spec:
+  containers:
+  - name: cache-server
+    image: redis:7.2.4
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+    env:
+      - name: AUTHOR
+        valueFrom:
+          configMapKeyRef:
+            key: author
+    command:
+      - redis-server
+      - /tmp/redis.conf
+    ports:
+      - containerPort: 7000
+    volumeMounts:
+      - name: redisconf
+        mountPath: /tmp/
+        readOnly: true
+  
+  volumes:
+    - name: redisconf
+      configMap: 
+        name: redisconf
