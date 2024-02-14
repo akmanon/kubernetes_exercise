@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: cache-server
+  name: cacheserver
   labels:
-    name: cache-server
+    name: cacheserver
 spec:
   containers:
-  - name: cache-server
+  - name: cacheserver
     image: redis:7.2.4
     resources:
       limits:
