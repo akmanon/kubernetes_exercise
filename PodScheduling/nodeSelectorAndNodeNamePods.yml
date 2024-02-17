@@ -15,11 +15,11 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nodeNamePod
+  name: nodenamepod
   labels:
-    name: nodeNamePod
+    name: nodenamepod
 spec:
   nodeName: node03
   containers:
-  - name: nodeNamePod
+  - name: nodenamepod
     image: httpd:latest
