@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeselectpod
+  labels:
+    name: nodeselectpod
+spec:
+  containers:
+  - name: nodeselectpod
+    image:  nginx:latest
+  nodeSelector:
+    disktype: ssd
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeNamePod
+  labels:
+    name: nodeNamePod
+spec:
+  nodeName: node03
+  containers:
+  - name: nodeNamePod
+    image: httpd:latest
