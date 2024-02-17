@@ -19,7 +19,7 @@ metadata:
   labels:
     name: nodenamepod
 spec:
-  nodeName: node03
+  nodeName: node01
   containers:
   - name: nodenamepod
     image: httpd:latest
