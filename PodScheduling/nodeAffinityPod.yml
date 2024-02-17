@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nodeaffinitypod
+  name: nodeaffinitypodreq
   labels:
-    name: nodeaffinitypod
+    name: nodeaffinitypodreq
 spec:
   affinity:
     nodeAffinity:
@@ -17,7 +17,7 @@ spec:
           - key: db
             operator: DoesNotExist
   containers:
-  - name: nodeaffinitypod
+  - name: nodeaffinitypodreq
     image: httpd:latest
     resources:
       limits:
@@ -27,9 +27,9 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nodeaffinity
+  name: nodeaffinitypref
   labels:
-    name: nodeaffinity
+    name: nodeaffinitypref
 spec:
   affinity:
     nodeAffinity:
@@ -40,7 +40,7 @@ spec:
           - key: db
             operator: DoesNotExist
   containers:
-  - name: nodeaffinity
+  - name: nodeaffinitypref
     image: nginx:latest
     resources:
       limits:
