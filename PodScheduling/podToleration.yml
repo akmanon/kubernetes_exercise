@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginxprodtoleration
+  labels:
+    name: nginxprodtoleration
+spec:
+  containers:
+  - name: nginxprodtoleration
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  tolerations:
+  - key: "app"
+    operator: "Exists"
+    effect: "NoSchedule"
+#Command to Apply taints to the nodes ~$ kubectl taint nodes node01 app=production:NoSchedule
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpdapptoleration
+  labels:
+    name: httpdapptoleration
+spec:
+  containers:
+  - name: httpdapptoleration
+    image: httpd:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  tolerations:
+  - key: "app"
+    operator: "Equal"
+    value: "middleware"
+    effect: "NoSchedule"
+  - key: "env"
+    operator: "Equal"
+    value: "production"
+    effect: "NoSchedule"
