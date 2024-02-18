@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: httpsdaemon
+spec:
+  selector:
+    matchLabels:
+      app: heathhttp
+  template:
+    metadata:
+      labels:
+        app: healthhttp
+    spec:
+      initContainer:
+      - name: inser-node-name
+        image: alpine
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        command:
+          - "/bin/sh"
+          - "-c"
+          - "echo 'Hello From $NODE_NAME' > /usr/share/nginx/html/index.html"
+        volumeMounts:
+        - name: node-name-page
+          mountPath: /usr/share/nginx/html/
+
+      containers:
+      - name: nginx-server
+        image: nginx:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        volumeMounts:
+        - name: node-name-page
+          mountPath: /usr/share/nginx/html/
+        ports:
+        - containerPort: 80
+      
+      volumes:
+      - name: node-name-page
+        emptyDir: {}
