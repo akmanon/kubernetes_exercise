@@ -12,7 +12,7 @@ spec:
         app: healthhttp
     spec:
       initContainer:
-      - name: inser-node-name
+      - name: insert-node-name
         image: alpine
         env:
         - name: NODE_NAME
