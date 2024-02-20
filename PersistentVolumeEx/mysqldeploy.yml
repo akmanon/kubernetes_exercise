@@ -27,7 +27,8 @@ spec:
             cpu: "600m"
         ports:
         - containerPort: 3306
-        volumes:
-          - name: mysql-pv
-            persistentVolumeClaim:
-              claimName: mysql-pvc
+
+      volumes:
+        - name: mysql-pv
+          persistentVolumeClaim:
+            claimName: mysql-pvc

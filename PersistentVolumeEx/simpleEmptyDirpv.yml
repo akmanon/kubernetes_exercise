@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: exemptydir
+  labels:
+    name: exemptydir
+spec:
+  containers:
+  - name: centos7
+    image: centos:7
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "sleep 10000;"
+    resources:
+      limits:
+        memory: "200Mi"
+        cpu: "500m"
+    volumes:
+    - name: vol01
+      mountPath: "/app-data"
+
+  - name: centos7-sidecar
+    image: centos:7
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "sleep 10000;"
+    resources:
+      limits:
+        memory: "200Mi"
+        cpu: "500m"
+    volumes:
+    - name: vol01
+      mountPath: "/app-data-bk"
+      
+volumes:
+- name: vol01
+  emptyDir: {}
