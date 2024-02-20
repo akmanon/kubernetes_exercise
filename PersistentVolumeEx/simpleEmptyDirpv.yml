@@ -30,10 +30,10 @@ spec:
       limits:
         memory: "200Mi"
         cpu: "500m"
-    volumeMounts:
+    volumeMount:
     - name: vol01
       mountPath: "/app-data-bk"
-
-volumes:
-- name: vol01
-  emptyDir: {}
+      
+  volumes:
+  - name: vol01
+    emptyDir: {}
