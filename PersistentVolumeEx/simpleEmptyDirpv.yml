@@ -33,7 +33,9 @@ spec:
     volumeMount:
     - name: vol01
       mountPath: "/app-data-bk"
-      
+
   volumes:
   - name: vol01
     emptyDir: {}
+
+#It uses the Host Directory volumes are destroyed once the pod gets deleted/crashed
