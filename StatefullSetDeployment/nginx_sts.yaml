@@ -9,15 +9,6 @@ spec:
   serviceName: nginx-svc
   replicas: 2
   template:
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-          - matchExpressions:
-            - key: app
-              operator: In
-              values: 
-              - webserver
     metadata:
       labels:
         app: webserver
@@ -32,6 +23,16 @@ spec:
         volumeMounts:
         - name: www
           mountPath: /usr/share/nginx/html
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: "app"
+                operator: In
+                values:
+                - "nginx"
+            topologyKey: kubernetes.io/hostname
   volumeClaimTemplates:
   - metadata:
       name: www
