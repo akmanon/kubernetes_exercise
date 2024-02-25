@@ -32,13 +32,16 @@ spec:
         volumeMounts:
         - name: conf
           mountPath: /conf
-          configMap: redis-conf
         - name: data
           mountPath: /data   
         resources:
           requests:
             cpu: 100m
-            memory: 100mi 
+            memory: 100Mi
+      volumes:
+      - name: conf
+        configMap:
+        - name: redis-conf 
   volumeClaimTemplates:
   - metadata:
       name: data
@@ -47,3 +50,6 @@ spec:
       resources:
         requests:
           storage: 3Gi
+
+#Run Below Command to Join all the nodes
+#$$ redis-cli --cluster create 	192.168.1.5:6379 192.168.0.5:6379 192.168.1.7:6379 192.168.0.7:6379 192.168.1.9:6379 192.168.0.9:6379 --cluster-replicas 1
