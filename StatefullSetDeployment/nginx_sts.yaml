@@ -5,9 +5,10 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: myapp
+      app: webserver
+      env: prod
   serviceName: nginx-svc
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
@@ -15,7 +16,7 @@ spec:
         env: prod
     spec:
       containers:
-      - name: myapp
+      - name: nginx-web
         image: nginx:latest
         ports:
         - containerPort: 80
