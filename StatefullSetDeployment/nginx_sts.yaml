@@ -3,21 +3,21 @@ kind: StatefulSet
 metadata:
   name: webserver
 spec:
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-        - matchExpressions:
-          - key: app
-            operator: In
-            values: 
-            - webserver
   selector:
     matchLabels:
       app: myapp
   serviceName: nginx-svc
   replicas: 2
   template:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+          - matchExpressions:
+            - key: app
+              operator: In
+              values: 
+              - webserver
     metadata:
       labels:
         app: webserver
