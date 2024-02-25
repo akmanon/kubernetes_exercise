@@ -4,8 +4,15 @@ metadata:
   name: mypv
 spec:
   capacity:
-    storage: 5Gi
+    storage: <Size>
+  volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: /data/mysql-data
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /tmp
+    server: 172.17.0.2
