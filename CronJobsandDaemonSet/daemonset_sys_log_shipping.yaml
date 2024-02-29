@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: syslog-ship
+  labels:
+    env: prod
+    app: syslog
+spec:
+  selector:
+    matchLabels:
+      app: syslog
+  template:
+    metadata:
+      labels:
+        app: syslog
+    spec:
+      containers:
+        - name: fluentd
+          image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+          resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          volumeMounts:
+          - name: varlog
+            mountPath: /var/log
+      terminationGracePeriod: 10
+      volumes:
+      - name: /var/log
+        hostpath:
+          path: /var/log
