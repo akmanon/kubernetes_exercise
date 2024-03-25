@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app-cluster-01
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name:  app-readonly
+  namespace : app-cluster-01
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-ops
+  namespace: app-cluster-01
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name:  readonly-app-role
+  namespace: app-cluster-01
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "deployment"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: readonly-appns-rb
+  namespace: app-cluster-01
+roleRef:
+  kind: Role
+  name: readonly-app-role
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  namespace: app-cluster-01
+  name: app-readonly
